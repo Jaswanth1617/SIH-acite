@@ -1,0 +1,671 @@
+/**
+ * AICTE Integrated Complaint Monitoring & Status Dashboard (AICTE-SETU)
+ * Master Data Repository: Institutions, Bureaus, Regions, and Seeded Cases
+ */
+
+export const BUREAUS = [
+  {
+    id: 'RB',
+    name: 'Regulation Bureau',
+    shortName: 'RB',
+    code: 'RB',
+    color: '#2563eb',
+    bgColor: '#eff6ff',
+    borderColor: '#bfdbfe',
+    mandate: 'Enforcement of AICTE Regulations, Faculty Norms, Pay Scale Compliance & Regulatory Sanctions',
+    headOfficer: 'Dr. Rajeshwar Sharma, Director (RB)'
+  },
+  {
+    id: 'PGRC',
+    name: 'Public Grievance Redressal Cell',
+    shortName: 'PGRC',
+    code: 'PGRC',
+    color: '#d97706',
+    bgColor: '#fffbeb',
+    borderColor: '#fde68a',
+    mandate: 'Redressal of Student, Faculty & Parent Grievances, Certificate Withholding, Fee Refunds & Harassment',
+    headOfficer: 'Smt. Ananya Sen, Addl. Director (PGRC)'
+  },
+  {
+    id: 'AB',
+    name: 'Approval Bureau',
+    shortName: 'Approval Bureau',
+    code: 'AB',
+    color: '#059669',
+    bgColor: '#ecfdf5',
+    borderColor: '#a7f3d0',
+    mandate: 'Annual Extension of Approval (EoA), Sanctioned Intake, Building/Land Norms & Unapproved Courses',
+    headOfficer: 'Prof. K. V. Ramanathan, Advisor (AB)'
+  },
+  {
+    id: 'VC',
+    name: 'Vigilance Cell',
+    shortName: 'Vigilance Cell',
+    code: 'VC',
+    color: '#dc2626',
+    bgColor: '#fef2f2',
+    borderColor: '#fecaca',
+    mandate: 'Inquiries into Malpractice, Financial Irregularities, Fictitious Faculty and Severe Code Violations',
+    headOfficer: 'Shri Vikram Malhotra, Chief Vigilance Officer'
+  }
+];
+
+export const REGIONS = [
+  { id: 'NR', name: 'Northern Region', office: 'Kanpur / New Delhi', states: 'Uttar Pradesh, Uttarakhand, Delhi' },
+  { id: 'NWR', name: 'North-Western Region', office: 'Chandigarh', states: 'Punjab, Haryana, Chandigarh, HP, J&K, Ladakh' },
+  { id: 'WR', name: 'Western Region', office: 'Mumbai', states: 'Maharashtra, Goa' },
+  { id: 'CR', name: 'Central Region', office: 'Bhopal', states: 'Madhya Pradesh, Chhattisgarh, Gujarat' },
+  { id: 'ER', name: 'Eastern Region', office: 'Kolkata', states: 'West Bengal, Bihar, Jharkhand, Odisha, Assam, NE' },
+  { id: 'SR', name: 'Southern Region', office: 'Chennai', states: 'Tamil Nadu, Andhra Pradesh, Telangana, Puducherry' },
+  { id: 'SWR', name: 'South-Western Region', office: 'Bengaluru', states: 'Karnataka, Kerala' }
+];
+
+export const COMPLAINT_CATEGORIES = [
+  'Withholding of Original Certificates & Degrees',
+  'Non-Payment of 7th CPC Faculty Salaries & Arrears',
+  'Excess Tuition / Unsanctioned Capitation Fee',
+  'Non-Refund of Caution Deposit / Fees on Withdrawal',
+  'Running Unapproved Programs / Over-Admission Beyond Intake',
+  'Infrastructure, Lab Equipment & Safety Deficiencies',
+  'Faculty Shortage & Fictitious Faculty (Ghost Teachers)',
+  'Student Harassment, Ragging & Disciplinary Injustice',
+  'Non-Constitution of Internal Complaints Committee (ICC)',
+  'Violation of AICTE Norms in Online / Distance Learning'
+];
+
+export const STATUS_TYPES = [
+  { id: 'RECEIVED', label: 'Received / Intake', color: '#64748b', bg: '#f1f5f9' },
+  { id: 'UNDER_PROCESS', label: 'Under Process', color: '#0284c7', bg: '#e0f2fe' },
+  { id: 'NOTICE_ISSUED', label: 'Notice Issued to College', color: '#d97706', bg: '#fef3c7' },
+  { id: 'COORDINATION_REQUIRED', label: 'Coordination Required', color: '#dc2626', bg: '#fee2e2' },
+  { id: 'HEARING_SCHEDULED', label: 'Joint Hearing Scheduled', color: '#7c3aed', bg: '#f3e8ff' },
+  { id: 'TRANSFERRED', label: 'Transferred to Bureau', color: '#0d9488', bg: '#ccfbf1' },
+  { id: 'ESCALATED', label: 'Escalated to Chairman', color: '#b91c1c', bg: '#ffe4e6' },
+  { id: 'DISPOSED', label: 'Disposed / Resolved', color: '#16a34a', bg: '#dcfce7' }
+];
+
+export const INITIAL_INSTITUTIONS = [
+  {
+    permanentId: '1-3324901231',
+    name: 'Kalinga Institute of Engineering & Technology',
+    aliases: ['KIET Bhubaneswar', 'Kalinga Tech Inst'],
+    type: 'Private Self-Financing',
+    region: 'Eastern Region',
+    state: 'Odisha',
+    city: 'Bhubaneswar',
+    address: 'Plot No. 44, Infocity Avenue, Patia, Bhubaneswar - 751024',
+    approvedIntake: 720,
+    establishedYear: 2004,
+    principalName: 'Dr. Soumya Ranjan Panda',
+    email: 'principal@kiet-edu.in',
+    phone: '+91 674 2748900',
+    accreditation: 'NBA Tier-II (CSE, ECE), NAAC A',
+    riskLevel: 'CRITICAL', // High overlap risk
+    activeCasesCount: 2,
+    totalHistoricalCases: 5
+  },
+  {
+    permanentId: '1-4491028372',
+    name: 'Dr. B.R. Ambedkar Technical Campus',
+    aliases: ['BATC Pune', 'Ambedkar Tech Campus'],
+    type: 'Autonomous State-Aided',
+    region: 'Western Region',
+    state: 'Maharashtra',
+    city: 'Pune',
+    address: 'Survey 112/A, Paud Road, Kothrud, Pune - 411038',
+    approvedIntake: 960,
+    establishedYear: 1998,
+    principalName: 'Prof. Milind Deshmukh',
+    email: 'admin@batc-pune.ac.in',
+    phone: '+91 20 25438100',
+    accreditation: 'NBA Accredited (All UG), NAAC A+',
+    riskLevel: 'CRITICAL', // High overlap risk
+    activeCasesCount: 2,
+    totalHistoricalCases: 7
+  },
+  {
+    permanentId: '1-5821904711',
+    name: 'Vanguard Institute of Technology & Management',
+    aliases: ['VITM Bangalore', 'Vanguard Tech Bengaluru'],
+    type: 'Private Self-Financing',
+    region: 'South-Western Region',
+    state: 'Karnataka',
+    city: 'Bengaluru',
+    address: 'Outer Ring Road, Marathahalli Post, Bengaluru - 560037',
+    approvedIntake: 600,
+    establishedYear: 2011,
+    principalName: 'Dr. C. Venkatesh',
+    email: 'contact@vanguard.edu.in',
+    phone: '+91 80 41295500',
+    accreditation: 'NAAC B++',
+    riskLevel: 'HIGH',
+    activeCasesCount: 2,
+    totalHistoricalCases: 4
+  },
+  {
+    permanentId: '1-2094817263',
+    name: 'Northern Frontier College of Engineering',
+    aliases: ['NFCE Lucknow', 'Northern Frontier Tech'],
+    type: 'Private Self-Financing',
+    region: 'Northern Region',
+    state: 'Uttar Pradesh',
+    city: 'Lucknow',
+    address: 'Sector 14, Ring Road, Indira Nagar, Lucknow - 226016',
+    approvedIntake: 540,
+    establishedYear: 2008,
+    principalName: 'Dr. Harish Chandra Verma',
+    email: 'registrar@nfce-lucknow.edu.in',
+    phone: '+91 522 2398401',
+    accreditation: 'NBA Valid till 2027',
+    riskLevel: 'MODERATE',
+    activeCasesCount: 1,
+    totalHistoricalCases: 3
+  },
+  {
+    permanentId: '1-6712398451',
+    name: 'Shree Krishna Institute of Pharmacy & Research',
+    aliases: ['SKIPR Ahmedabad', 'Krishna Pharmacy College'],
+    type: 'Private Trust',
+    region: 'Central Region',
+    state: 'Gujarat',
+    city: 'Ahmedabad',
+    address: 'S.G. Highway, Thaltej, Ahmedabad - 380054',
+    approvedIntake: 240,
+    establishedYear: 2015,
+    principalName: 'Dr. Meera J. Patel',
+    email: 'info@skipr.ac.in',
+    phone: '+91 79 26851200',
+    accreditation: 'PCI Approved, NBA Eligible',
+    riskLevel: 'LOW',
+    activeCasesCount: 1,
+    totalHistoricalCases: 2
+  },
+  {
+    permanentId: '1-8930217482',
+    name: 'St. Thomas College of Engineering & Tech',
+    aliases: ['STCET Chennai', 'St Thomas Engg'],
+    type: 'Minority Private Self-Financing',
+    region: 'Southern Region',
+    state: 'Tamil Nadu',
+    city: 'Chennai',
+    address: 'GST Road, St. Thomas Mount, Chennai - 600016',
+    approvedIntake: 840,
+    establishedYear: 2001,
+    principalName: 'Dr. Francis Xavier',
+    email: 'principal@stcet.ac.in',
+    phone: '+91 44 22340911',
+    accreditation: 'NAAC A+, NBA Accredited',
+    riskLevel: 'LOW',
+    activeCasesCount: 0,
+    totalHistoricalCases: 6
+  },
+  {
+    permanentId: '1-9923847162',
+    name: 'Himachal Technical Institute of Management',
+    aliases: ['HTIM Shimla', 'Himachal Tech Inst'],
+    type: 'Private Self-Financing',
+    region: 'North-Western Region',
+    state: 'Himachal Pradesh',
+    city: 'Shimla',
+    address: 'Near Summer Hill, Shimla - 171005',
+    approvedIntake: 300,
+    establishedYear: 2013,
+    principalName: 'Prof. Virender Singh',
+    email: 'office@htim-shimla.org',
+    phone: '+91 177 2831002',
+    accreditation: 'NAAC B',
+    riskLevel: 'MODERATE',
+    activeCasesCount: 1,
+    totalHistoricalCases: 2
+  }
+];
+
+export const INITIAL_CASES = [
+  {
+    caseId: 'AICTE-RB-2026-0319',
+    institutionPermanentId: '1-3324901231',
+    institutionName: 'Kalinga Institute of Engineering & Technology',
+    region: 'Eastern Region',
+    bureau: 'RB',
+    category: 'Non-Payment of 7th CPC Faculty Salaries & Arrears',
+    complainantType: 'Faculty Members Association',
+    complainantName: 'Dr. Biswajeet Mohanty & 28 Faculty Members',
+    dateOfReceipt: '2026-09-18',
+    status: 'COORDINATION_REQUIRED',
+    priority: 'HIGH',
+    assignedOfficer: 'Dr. Rajeshwar Sharma',
+    officerDesignation: 'Director, Regulation Bureau',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-10-18', // Overdue
+    isOverdue: true,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-PGRC-2026-0814'],
+    lastActionTaken: 'Notice issued regarding non-compliance with 7th Central Pay Commission cadre pay structure',
+    lastActionDate: '2026-10-12',
+    nextActionRequired: 'Joint Hearing with PGRC to avoid contradictory show-cause orders to management',
+    description: 'Representation received from 28 regular faculty members alleging salary disbursement at 5th CPC rates and non-payment of mandatory arrears since July 2024. College management threatening termination if complaints escalated.',
+    actionHistory: [
+      {
+        id: 'ACT-001',
+        timestamp: '2026-09-18T10:15:00+05:30',
+        officer: 'Smt. Kavita Roy (Section Officer, RB)',
+        bureau: 'RB',
+        action: 'Case Registered and Admitted',
+        remarks: 'Direct faculty grievance received via AICTE Portal with signed petition.',
+        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        documents: [{ name: 'Faculty_Signed_Petition.pdf', size: '1.4 MB', hash: '5f4dcc3b5aa765d61d8327deb882cf992b95bc88e1e1a539bc213ceb03577d33' }]
+      },
+      {
+        id: 'ACT-002',
+        timestamp: '2026-09-25T14:30:00+05:30',
+        officer: 'Dr. Rajeshwar Sharma (Director, RB)',
+        bureau: 'RB',
+        action: 'Show Cause Notice Dispatched',
+        remarks: 'Direction issued to Principal & Trust Chairman to furnish 24 months bank disbursement statements within 14 days.',
+        hash: 'b10a8db164e0754105b7a99be72e3fe5ecb631a29367104b901b068cdfd6306c',
+        documents: [{ name: 'AICTE_RB_Notice_Ref_419.pdf', size: '420 KB', hash: '6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b' }]
+      },
+      {
+        id: 'ACT-003',
+        timestamp: '2026-10-14T11:00:00+05:30',
+        officer: 'System Auto-Engine (AICTE-SETU)',
+        bureau: 'RB',
+        action: 'Cross-Bureau Overlap Flagged',
+        remarks: 'System detected that PGRC is concurrently investigating case AICTE-PGRC-2026-0814 against same institution for certificate retention & financial coercion.',
+        hash: 'd4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35',
+        documents: []
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-PGRC-2026-0814',
+    institutionPermanentId: '1-3324901231',
+    institutionName: 'Kalinga Institute of Engineering & Technology',
+    region: 'Eastern Region',
+    bureau: 'PGRC',
+    category: 'Withholding of Original Certificates & Degrees',
+    complainantType: 'Graduating Students & Parents',
+    complainantName: 'Rohan Senapati & 14 Others',
+    dateOfReceipt: '2026-09-29',
+    status: 'COORDINATION_REQUIRED',
+    priority: 'HIGH',
+    assignedOfficer: 'Smt. Ananya Sen',
+    officerDesignation: 'Addl. Director, PGRC',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-10-29',
+    isOverdue: false,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-RB-2026-0319'],
+    lastActionTaken: 'College explanation summoned regarding retention of 10th/12th/B.Tech certificates',
+    lastActionDate: '2026-10-15',
+    nextActionRequired: 'Merge action with Regulation Bureau inquiry to prevent contradictory directions',
+    description: '15 students placed in campus recruitments prevented from joining corporate employers because the college demands an illegal "Institutional Alumni Development Fee" of Rs. 45,000 before returning original certificates.',
+    actionHistory: [
+      {
+        id: 'ACT-101',
+        timestamp: '2026-09-29T16:20:00+05:30',
+        officer: 'Shri Pradeep Verma (Assistant Director, PGRC)',
+        bureau: 'PGRC',
+        action: 'Grievance Intake & Categorization',
+        remarks: 'Urgent notice category under AICTE Regulations on Non-Retention of Certificates.',
+        hash: '7d793037a0760186574b0282f2f435e7b1e737748b0865f54f266ee17e114cf7',
+        documents: [{ name: 'Students_Offer_Letters_Denial_Proof.pdf', size: '2.1 MB', hash: '8f4dcc3b5aa765d61d8327deb882cf992b95bc88e1e1a539bc213ceb03577d44' }]
+      },
+      {
+        id: 'ACT-102',
+        timestamp: '2026-10-15T10:00:00+05:30',
+        officer: 'Smt. Ananya Sen (Addl. Director, PGRC)',
+        bureau: 'PGRC',
+        action: 'Summons Issued for Document Return',
+        remarks: 'College instructed to release certificates immediately without financial lien.',
+        hash: '9f83c6027ae456ffb30ec814003774026ce45f22e2befc90b04a545937cbcf38',
+        documents: [{ name: 'Summons_Order_Certificates_Retention.pdf', size: '512 KB', hash: '1f8ac10f23c5b5bc1167bda84b833e5c057a77d2ec394587b89304b45730f4d2' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-RB-2026-0271',
+    institutionPermanentId: '1-4491028372',
+    institutionName: 'Dr. B.R. Ambedkar Technical Campus',
+    region: 'Western Region',
+    bureau: 'RB',
+    category: 'Running Unapproved Programs / Over-Admission Beyond Intake',
+    complainantType: 'Whistleblower / Inspection Report',
+    complainantName: 'AICTE Regional Surprise Inspection Cell',
+    dateOfReceipt: '2026-09-05',
+    status: 'COORDINATION_REQUIRED',
+    priority: 'HIGH',
+    assignedOfficer: 'Dr. Rajeshwar Sharma',
+    officerDesignation: 'Director, Regulation Bureau',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-10-05',
+    isOverdue: true,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-PGRC-2026-0745'],
+    lastActionTaken: 'Regional inspection findings referred to Standing Hearing Committee (SHC)',
+    lastActionDate: '2026-10-10',
+    nextActionRequired: 'Harmonize regulatory penalty with pending PGRC student refund petitions',
+    description: 'During surprise scrutiny, institution found to be operating an unauthorized "Executive Post Graduate Diploma in AI & Analytics" with 120 students without AICTE approval council approval.',
+    actionHistory: [
+      {
+        id: 'ACT-201',
+        timestamp: '2026-09-05T09:30:00+05:30',
+        officer: 'Regional Officer, Western Region',
+        bureau: 'RB',
+        action: 'Surprise Inspection Dossier Logged',
+        remarks: 'Report uploaded with physical verification photos of classrooms and brochures.',
+        hash: '12ca17b49af2289436f303e0166030a21e525d266e209267433801a8fd4071a0',
+        documents: [{ name: 'Surprise_Inspection_Report_Pune.pdf', size: '4.8 MB', hash: '3e25960a79dbc69b674cd4ec67a72c62' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-PGRC-2026-0745',
+    institutionPermanentId: '1-4491028372',
+    institutionName: 'Dr. B.R. Ambedkar Technical Campus',
+    region: 'Western Region',
+    bureau: 'PGRC',
+    category: 'Non-Refund of Caution Deposit / Fees on Withdrawal',
+    complainantType: 'Enrolled Students (Unapproved Batch)',
+    complainantName: 'Akash Kulkarni & Batch Representatives',
+    dateOfReceipt: '2026-09-12',
+    status: 'COORDINATION_REQUIRED',
+    priority: 'HIGH',
+    assignedOfficer: 'Smt. Ananya Sen',
+    officerDesignation: 'Addl. Director, PGRC',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-10-12',
+    isOverdue: true,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-RB-2026-0271'],
+    lastActionTaken: 'Grievance clubbed with regulatory inquiry of RB',
+    lastActionDate: '2026-10-18',
+    nextActionRequired: 'Coordinate full fee refund order along with RB punitive sanction',
+    description: 'Students admitted to Executive AI program discovered course lacks AICTE approval; college refused refund of Rs 1,80,000 fee per candidate and threatened expulsion.',
+    actionHistory: [
+      {
+        id: 'ACT-301',
+        timestamp: '2026-09-12T11:45:00+05:30',
+        officer: 'Grievance Intake Officer, PGRC',
+        bureau: 'PGRC',
+        action: 'Student Collective Complaint Registered',
+        remarks: 'Complaint supported by fee deposit receipts and admission letters.',
+        hash: 'a57193b2cc32e8d4239845fef89e21e05d2590218b6284693a6125018f2d5930',
+        documents: [{ name: 'Fee_Receipts_Executive_AI.pdf', size: '3.2 MB', hash: '594f803b380a41396ed63dca39503542' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-PGRC-2026-0922',
+    institutionPermanentId: '1-5821904711',
+    institutionName: 'Vanguard Institute of Technology & Management',
+    region: 'South-Western Region',
+    bureau: 'PGRC',
+    category: 'Excess Tuition / Unsanctioned Capitation Fee',
+    complainantType: 'Parent Council Representative',
+    complainantName: 'K. S. Narayanaswamy',
+    dateOfReceipt: '2026-10-02',
+    status: 'UNDER_PROCESS',
+    priority: 'MEDIUM',
+    assignedOfficer: 'Shri Pradeep Verma',
+    officerDesignation: 'Assistant Director, PGRC',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-11-01',
+    isOverdue: false,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-RB-2026-0410'],
+    lastActionTaken: 'Detailed financial ledger sought from college trust accounts',
+    lastActionDate: '2026-10-20',
+    nextActionRequired: 'Await trust response by 28th October',
+    description: 'Complaint alleging compulsory charge of Rs 60,000 per annum under "Campus Modernization Trust Levy" over and above state-regulated fee structure.',
+    actionHistory: [
+      {
+        id: 'ACT-401',
+        timestamp: '2026-10-02T14:10:00+05:30',
+        officer: 'Shri Pradeep Verma',
+        bureau: 'PGRC',
+        action: 'Notice Dispatched',
+        remarks: 'Preliminary verification reveals discrepancy between official prospectus and bank deposits.',
+        hash: 'b12e34f9a08172c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456',
+        documents: [{ name: 'Prospectus_vs_Fee_Demand_Note.pdf', size: '980 KB', hash: 'a1b2c3d4e5f60718293a4b5c6d7e8f90' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-RB-2026-0410',
+    institutionPermanentId: '1-5821904711',
+    institutionName: 'Vanguard Institute of Technology & Management',
+    region: 'South-Western Region',
+    bureau: 'RB',
+    category: 'Infrastructure, Lab Equipment & Safety Deficiencies',
+    complainantType: 'Faculty / Staff Member',
+    complainantName: 'Anonymous Lab Instructor',
+    dateOfReceipt: '2026-10-08',
+    status: 'UNDER_PROCESS',
+    priority: 'MEDIUM',
+    assignedOfficer: 'Dr. Rajeshwar Sharma',
+    officerDesignation: 'Director, RB',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-11-07',
+    isOverdue: false,
+    overlapDetected: true,
+    linkedCaseIds: ['AICTE-PGRC-2026-0922'],
+    lastActionTaken: 'Expert Visiting Committee (EVC) constituted for physical inspection',
+    lastActionDate: '2026-10-22',
+    nextActionRequired: 'Receive EVC inspection report',
+    description: 'Robotics and Mechatronics labs reported without critical high-voltage safety breakers and licensed simulation software, posing hazard to students.',
+    actionHistory: [
+      {
+        id: 'ACT-501',
+        timestamp: '2026-10-08T15:00:00+05:30',
+        officer: 'Dr. Rajeshwar Sharma',
+        bureau: 'RB',
+        action: 'EVC Constitution Approved',
+        remarks: 'Two senior professors from IISc Bengaluru deputed for surprise audit.',
+        hash: 'c83421e07b819203a4b5c6d7e8f90123456789abcdef0123456789abcdef0123',
+        documents: [{ name: 'EVC_Order_Bengaluru.pdf', size: '340 KB', hash: 'f0e1d2c3b4a596877869504132231405' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-RB-2026-0155',
+    institutionPermanentId: '1-2094817263',
+    institutionName: 'Northern Frontier College of Engineering',
+    region: 'Northern Region',
+    bureau: 'RB',
+    category: 'Faculty Shortage & Fictitious Faculty (Ghost Teachers)',
+    complainantType: 'RTI Activist / Student',
+    complainantName: 'Sunil Bajpai',
+    dateOfReceipt: '2026-08-20',
+    status: 'HEARING_SCHEDULED',
+    priority: 'HIGH',
+    assignedOfficer: 'Dr. Rajeshwar Sharma',
+    officerDesignation: 'Director, RB',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-09-19',
+    isOverdue: true,
+    overlapDetected: false,
+    linkedCaseIds: [],
+    lastActionTaken: 'Hearing date fixed before AICTE Standing Appellate Committee (SAC)',
+    lastActionDate: '2026-10-18',
+    nextActionRequired: 'Standing Appellate Committee hearing scheduled for 29th October 2026',
+    description: 'Aadhaar matching algorithm identified 7 professors simultaneously listed on payroll of two private colleges in Lucknow and Bareilly.',
+    actionHistory: [
+      {
+        id: 'ACT-601',
+        timestamp: '2026-08-20T10:00:00+05:30',
+        officer: 'Shri Manoj Kumar (Data Analyst, RB)',
+        bureau: 'RB',
+        action: 'Biometric Discrepancy Flagged',
+        remarks: 'Cross-verification with AICTE Faculty Database confirmed duplicate Aadhaar registration.',
+        hash: 'd9e8f7a6b5c4d3e2f1a09b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e',
+        documents: [{ name: 'Aadhaar_Duplicate_Audit.pdf', size: '1.8 MB', hash: '1234567890abcdef1234567890abcdef' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-AB-2026-0088',
+    institutionPermanentId: '1-6712398451',
+    institutionName: 'Shree Krishna Institute of Pharmacy & Research',
+    region: 'Central Region',
+    bureau: 'AB',
+    category: 'Infrastructure, Lab Equipment & Safety Deficiencies',
+    complainantType: 'State Pharmacy Council',
+    complainantName: 'Gujarat State Technical Board',
+    dateOfReceipt: '2026-10-10',
+    status: 'UNDER_PROCESS',
+    priority: 'LOW',
+    assignedOfficer: 'Prof. K. V. Ramanathan',
+    officerDesignation: 'Advisor, Approval Bureau',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-11-09',
+    isOverdue: false,
+    overlapDetected: false,
+    linkedCaseIds: [],
+    lastActionTaken: 'Deficiency letter issued for medicinal plant garden area compliance',
+    lastActionDate: '2026-10-19',
+    nextActionRequired: 'College compliance affidavit expected',
+    description: 'Minor deficiency in pharmacognosy museum and herbal garden acreage as per AICTE Approval Process Handbook (APH 2026-27).',
+    actionHistory: [
+      {
+        id: 'ACT-701',
+        timestamp: '2026-10-10T11:00:00+05:30',
+        officer: 'Prof. K. V. Ramanathan',
+        bureau: 'AB',
+        action: 'APH Scrutiny Deficiencies Communicated',
+        remarks: 'Affidavit with geo-tagged images requested within 15 days.',
+        hash: 'e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5',
+        documents: [{ name: 'Scrutiny_Deficiency_List.pdf', size: '310 KB', hash: 'fedcba0987654321fedcba0987654321' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-PGRC-2026-0620',
+    institutionPermanentId: '1-8930217482',
+    institutionName: 'St. Thomas College of Engineering & Tech',
+    region: 'Southern Region',
+    bureau: 'PGRC',
+    category: 'Non-Refund of Caution Deposit / Fees on Withdrawal',
+    complainantType: 'Parent / Candidate',
+    complainantName: 'S. Ramanathan',
+    dateOfReceipt: '2026-08-01',
+    status: 'DISPOSED',
+    priority: 'MEDIUM',
+    assignedOfficer: 'Smt. Ananya Sen',
+    officerDesignation: 'Addl. Director, PGRC',
+    slaDaysLimit: 30,
+    expectedDisposalDate: '2026-08-31',
+    isOverdue: false,
+    overlapDetected: false,
+    linkedCaseIds: [],
+    lastActionTaken: 'Full refund of Rs 75,000 verified with UTR receipt; case closed with satisfaction',
+    lastActionDate: '2026-08-25',
+    nextActionRequired: 'None (Case Disposed)',
+    description: 'Student surrendered seat prior to last admission date; institute initially withheld Rs. 25,000 processing charges in violation of AICTE refund matrix.',
+    actionHistory: [
+      {
+        id: 'ACT-801',
+        timestamp: '2026-08-01T10:00:00+05:30',
+        officer: 'PGRC Desk Officer',
+        bureau: 'PGRC',
+        action: 'Case Registered',
+        remarks: 'Refund claim submitted with surrender slip.',
+        hash: 'a1b2c3d4e5f678901234567890abcdef1234567890abcdef1234567890abcdef',
+        documents: []
+      },
+      {
+        id: 'ACT-802',
+        timestamp: '2026-08-25T16:00:00+05:30',
+        officer: 'Smt. Ananya Sen',
+        bureau: 'PGRC',
+        action: 'Refund Disbursed & Disposal Order Signed',
+        remarks: 'College furnished RTGS reference UTR-SBI99214481. Complainant confirmed receipt. Case Disposed.',
+        hash: 'f9e8d7c6b5a43210f9e8d7c6b5a43210f9e8d7c6b5a43210f9e8d7c6b5a43210',
+        documents: [{ name: 'Refund_Bank_UTR_Proof.pdf', size: '210 KB', hash: '0987654321abcdef0987654321abcdef' }]
+      }
+    ]
+  },
+  {
+    caseId: 'AICTE-VC-2026-0041',
+    institutionPermanentId: '1-9923847162',
+    institutionName: 'Himachal Technical Institute of Management',
+    region: 'North-Western Region',
+    bureau: 'VC',
+    category: 'Student Harassment, Ragging & Disciplinary Injustice',
+    complainantType: 'Anti-Ragging Helpline Referral',
+    complainantName: 'National Anti-Ragging Monitoring Cell',
+    dateOfReceipt: '2026-10-15',
+    status: 'UNDER_PROCESS',
+    priority: 'HIGH',
+    assignedOfficer: 'Shri Vikram Malhotra',
+    officerDesignation: 'Chief Vigilance Officer',
+    slaDaysLimit: 15,
+    expectedDisposalDate: '2026-10-30',
+    isOverdue: false,
+    overlapDetected: false,
+    linkedCaseIds: [],
+    lastActionTaken: 'District Magistrate and SP notified; College Anti-Ragging Squad summoned',
+    lastActionDate: '2026-10-21',
+    nextActionRequired: 'Receive FIR and college disciplinary committee action report',
+    description: 'First-year hostel students alleged severe mental harassment and nocturnal ragging. Institutional authorities failed to file mandatory FIR within 24 hours.',
+    actionHistory: [
+      {
+        id: 'ACT-901',
+        timestamp: '2026-10-15T08:30:00+05:30',
+        officer: 'Shri Vikram Malhotra',
+        bureau: 'VC',
+        action: 'Immediate Inquiry Initiated',
+        remarks: 'High-level escalation as per Supreme Court Anti-Ragging Directives.',
+        hash: 'b3c4d5e6f7a89012b3c4d5e6f7a89012b3c4d5e6f7a89012b3c4d5e6f7a89012',
+        documents: [{ name: 'Anti_Ragging_Helpline_Transcript.pdf', size: '640 KB', hash: '567890abcdef1234567890abcdef1234' }]
+      }
+    ]
+  }
+];
+
+export const USER_ROLES = [
+  {
+    id: 'ADMIN',
+    name: 'Member Secretary / Chairman',
+    title: 'Super Administrator (Central Authority)',
+    badge: 'Central AICTE Executive',
+    department: 'AICTE Headquarters, New Delhi',
+    canCoordinate: true,
+    canEscalate: true,
+    canSignOff: true,
+    scope: 'ALL_BUREAUS'
+  },
+  {
+    id: 'OFFICER_RB',
+    name: 'Dr. Rajeshwar Sharma',
+    title: 'Director, Regulation Bureau (RB)',
+    badge: 'Regulation Bureau Lead',
+    department: 'Regulation Bureau (RB)',
+    canCoordinate: true,
+    canEscalate: true,
+    canSignOff: true,
+    scope: 'RB'
+  },
+  {
+    id: 'OFFICER_PGRC',
+    name: 'Smt. Ananya Sen',
+    title: 'Addl. Director, PGRC',
+    badge: 'PGRC Redressal Lead',
+    department: 'Public Grievance Redressal Cell (PGRC)',
+    canCoordinate: true,
+    canEscalate: true,
+    canSignOff: true,
+    scope: 'PGRC'
+  },
+  {
+    id: 'REGIONAL_OFFICER',
+    name: 'Dr. Amitabh Roy',
+    title: 'Regional Officer, Northern & Western',
+    badge: 'Regional Inspectorate',
+    department: 'AICTE Regional Office',
+    canCoordinate: false,
+    canEscalate: true,
+    canSignOff: false,
+    scope: 'REGIONAL'
+  }
+];
